@@ -1,0 +1,144 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "InGame",
+            "id": "de4d33a4-8e38-48b8-8f93-59cd79eff0a7",
+            "actions": [
+                {
+                    "name": "Pan Camera",
+                    "type": "Value",
+                    "id": "5b93d078-c0f8-4be7-b6a6-4e72234f805f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Right Mouse Delta",
+                    "id": "4272354d-e506-4093-a361-230b8e9d5ca8",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "InvertVector2",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "8552ed05-1c56-4b58-a465-f2a68f6b3c22",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "571852e1-f54d-4d13-ad40-2c1c2f3e1dea",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Middle Mouse Delta",
+                    "id": "eec59df4-e0a4-4702-be9d-9ccf8a72da43",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "InvertVector2",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "6b80a865-f14d-489e-bd96-8d666f82e288",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "14cd0fd1-a0db-45f5-869c-debcd7009c8f",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "WASD",
+                    "id": "2f5a01cb-581c-46d5-ae56-d3f1d289bc22",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "0cd16e98-7943-4f56-90c8-4c3bb5b14452",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "6d19d2eb-1b28-4d6e-b9bb-afc5bbccdd5c",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "1254dab7-8f6d-49d8-b1eb-e265bb6a0381",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "97042992-e418-41dc-8929-54257f21245d",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
