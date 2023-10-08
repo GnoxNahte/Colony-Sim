@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98e4acac899e9445acc863610065619, type: 3}
+  m_Name: MapGenSettings
+  m_EditorClassIdentifier: 
+  playerSettings: {fileID: 11400000, guid: b7b424d9eb65a3449b12eb50eca972d1, type: 2}
+  tiles:
+  - tile: {fileID: 11400000, guid: 4c5d542c4ea8ea346bff41b0fe1291d9, type: 2}
+  - tile: {fileID: 11400000, guid: fc089a82ea20ed9459d6adff7312888f, type: 2}
+  perlinNoiseScale: 0.05
