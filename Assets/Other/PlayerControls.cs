@@ -35,6 +35,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Zoom Camera"",
+                    ""type"": ""Value"",
+                    ""id"": ""726766ad-ceb8-4c1b-a5aa-3f7d9a53927a"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -158,6 +167,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Pan Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff51bc82-791e-4a01-ab8d-8cde1f459ea7"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -167,6 +187,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // InGame
         m_InGame = asset.FindActionMap("InGame", throwIfNotFound: true);
         m_InGame_PanCamera = m_InGame.FindAction("Pan Camera", throwIfNotFound: true);
+        m_InGame_ZoomCamera = m_InGame.FindAction("Zoom Camera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,11 +250,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_InGame;
     private List<IInGameActions> m_InGameActionsCallbackInterfaces = new List<IInGameActions>();
     private readonly InputAction m_InGame_PanCamera;
+    private readonly InputAction m_InGame_ZoomCamera;
     public struct InGameActions
     {
         private @PlayerControls m_Wrapper;
         public InGameActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @PanCamera => m_Wrapper.m_InGame_PanCamera;
+        public InputAction @ZoomCamera => m_Wrapper.m_InGame_ZoomCamera;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -246,6 +269,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PanCamera.started += instance.OnPanCamera;
             @PanCamera.performed += instance.OnPanCamera;
             @PanCamera.canceled += instance.OnPanCamera;
+            @ZoomCamera.started += instance.OnZoomCamera;
+            @ZoomCamera.performed += instance.OnZoomCamera;
+            @ZoomCamera.canceled += instance.OnZoomCamera;
         }
 
         private void UnregisterCallbacks(IInGameActions instance)
@@ -253,6 +279,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PanCamera.started -= instance.OnPanCamera;
             @PanCamera.performed -= instance.OnPanCamera;
             @PanCamera.canceled -= instance.OnPanCamera;
+            @ZoomCamera.started -= instance.OnZoomCamera;
+            @ZoomCamera.performed -= instance.OnZoomCamera;
+            @ZoomCamera.canceled -= instance.OnZoomCamera;
         }
 
         public void RemoveCallbacks(IInGameActions instance)
@@ -273,5 +302,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IInGameActions
     {
         void OnPanCamera(InputAction.CallbackContext context);
+        void OnZoomCamera(InputAction.CallbackContext context);
     }
 }

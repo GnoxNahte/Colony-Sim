@@ -9,9 +9,11 @@ public class PlayerControlsManager : MonoBehaviour
 
     // Input Actions
     private InputAction panCamera;
+    private InputAction zoomCamera;
 
     // Fields to easily get the inputs
     [field: SerializeField] public Vector2 PanCameraDelta { get; private set; }
+    [field: SerializeField] public float ZoomCameraDelta { get; private set; }
 
     public static PlayerControlsManager instance { get; private set; }
     private void Awake()
@@ -28,20 +30,24 @@ public class PlayerControlsManager : MonoBehaviour
         playerControls = new PlayerControls();
 
         panCamera = playerControls.InGame.PanCamera;
+        zoomCamera = playerControls.InGame.ZoomCamera;
     }
 
     private void OnEnable()
     {
         panCamera.Enable();
+        zoomCamera.Enable();
     }
 
     private void OnDisable()
     {
         panCamera.Disable();
+        zoomCamera.Disable();
     }
 
     private void Update()
     {
         PanCameraDelta = panCamera.ReadValue<Vector2>();
+        ZoomCameraDelta = zoomCamera.ReadValue<float>();
     }
 }
