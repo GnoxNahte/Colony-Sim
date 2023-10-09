@@ -8,7 +8,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-
 public class Map : MonoBehaviour
 {
     public Tilemap tilemap;
@@ -133,6 +132,9 @@ public class Map : MonoBehaviour
 
     private void OnValidate()
     {
+        if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isUpdating)
+            return;
+        
         ClearMap();
         GenerateMapJob();
     }
