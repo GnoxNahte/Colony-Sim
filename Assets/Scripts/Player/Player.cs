@@ -8,28 +8,12 @@ public class Player : MonoBehaviour
 {
     public Camera cam { get; private set; }
 
-    // Singleton
-    public static Player instance { get; private set; }
-
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
-        {
-            Destroy(gameObject);
-            Debug.LogError("More than 1 Player. Destroying this. Name: " + name);
-            return;
-        }
-
+        #if UNITY_EDITOR
+        if (FindObjectsByType<Player>(FindObjectsSortMode.None).Length > 1)
+            Debug.LogError("More than 1 player");
+        #endif
         cam = Camera.main;
-
-        print(Camera.allCameras);
-    }
-
-    private void Update()
-    {
-        cam = Camera.main;
-
     }
 }

@@ -12,130 +12,63 @@ public class Map : MonoBehaviour
 {
     public Tilemap tilemap;
     public MapGenerationSettings settings;
-    public MapGenerationPlayerSettings playerSettings { get { return settings.playerSettings; } }
+    public MapGenerationPlayerSettings playerSettings { get { return map.settings.playerSettings; } }
+    public Map map;
+
     [Range(0.001f, 0.5f)]
     public float scale;
     public Vector2Int offset;
-    [ContextMenu("Generate Map")]
-    void GenerateMap()
+
+    private Dictionary<Vector2, MapChunk> chunks;
+
+    Player player;
+
+    // Singleton
+    public static Map instance { get; private set; }
+
+    private void Awake()
     {
-        double startTime = Time.realtimeSinceStartupAsDouble;
-        settings.perlinNoiseScale = Mathf.Pow(scale, 1f/3f);
-        Vector2Int mapSize = playerSettings.size; // To shorten the code
-        Vector2Int halfSize = mapSize / 2;
-        BoundsInt bounds = new BoundsInt(
-            -halfSize.x, -halfSize.y, 0, // Position
-            mapSize.x, mapSize.y, 1      // Size
-        );
-
-
-        // Generate the array
-        TileBase[] tileArray = new TileBase[mapSize.x * mapSize.y];
-        for (int x = 0; x < mapSize.x; ++x)
+        if (instance == null)
+            instance = this;
+        else
         {
-            for (int y = 0; y < mapSize.y; ++y)
-            {
-                int index = x * mapSize.x + y;
-                //tileArray[index] = settings.tiles[index % 2].tile;
-                float value = Mathf.PerlinNoise(x * settings.perlinNoiseScale, y * settings.perlinNoiseScale);
-                tileArray[x * mapSize.x + y] = value < 0.5 ? settings.tiles[0].tile : settings.tiles[1].tile;
-            }
-        }
-
-        tilemap.SetTilesBlock(bounds, tileArray);
-        print("Time taken: " + (Time.realtimeSinceStartupAsDouble - startTime));
-    }
-
-    [BurstCompile]
-    struct MapGenerationJob : IJobParallelFor
-    {
-        public Vector2Int size;
-        public float noiseScale;
-        public Vector2Int offset;
-        public NativeArray<ushort> mapChunk;
-
-        [BurstCompile]
-        public void Execute(int index)
-        {
-            float value = noise.snoise(new float2(index % size.x + offset.x, index / size.y + offset.y) * noiseScale);
-            //Unity.Mathematics.Random rand = new Unity.Mathematics.Random();
-            if (value < 0.5f)
-                mapChunk[index] = 0;
-            else
-                mapChunk[index] = 1;
-        }
-    }
-
-    [ContextMenu("Generate Map Job")]
-    void GenerateMapJob()
-    {
-        double startTime = Time.realtimeSinceStartupAsDouble;
-        settings.perlinNoiseScale = scale;
-        Vector2Int mapSize = playerSettings.size; // To shorten the code
-        Vector2Int halfSize = mapSize / 2;
-        BoundsInt bounds = new BoundsInt(
-            -halfSize.x, -halfSize.y, 0, // Position
-            mapSize.x, mapSize.y, 1      // Size
-        );
-
-        var array = new NativeArray<ushort>(mapSize.x * mapSize.y, Allocator.TempJob);
-        // Init Job
-        var job = new MapGenerationJob()
-        {
-            mapChunk = array,
-            size = mapSize,
-            noiseScale = scale,
-            offset = offset,
-        };
-        JobHandle handle = job.Schedule(array.Length, 32);
-        handle.Complete();
-
-        var tileArray = new TileBase[mapSize.x * mapSize.y];
-        for (int x = 0; x < mapSize.x; ++x)
-        {
-            for (int y = 0; y < mapSize.y; ++y)
-            {
-                int index = x * mapSize.x + y;
-                tileArray[index] = settings.tiles[array[index]].tile;
-            }
-        }
-        array.Dispose();
-
-        //// Generate the array
-        //var tileArray = new TileBase[mapSize.x * mapSize.y];
-        //for (int x = 0; x < mapSize.x; ++x)
-        //{
-        //    for (int y = 0; y < mapSize.y; ++y)
-        //    {
-        //        tileArray[x * mapSize.x + y] = settings.tiles[0].tile;
-        //        //float value = Mathf.PerlinNoise(x * settings.perlinNoiseScale, y * settings.perlinNoiseScale);
-        //        //tileArray[x * mapSize.x + y] = value < 0.5 ? settings.tiles[0].tile : settings.tiles[1].tile;
-        //    }
-        //}
-
-        tilemap.SetTilesBlock(bounds, tileArray);
-        print("Time taken: " + (Time.realtimeSinceStartupAsDouble - startTime));
-
-    }
-
-    [ContextMenu("Clear Map")]
-    void ClearMap()
-    {
-        tilemap.ClearAllTiles();
-    }
-
-    [ContextMenu("Clear Editor Map")]
-    void ClearEditorMap()
-    {
-        tilemap.ClearAllEditorPreviewTiles();
-    }
-
-    private void OnValidate()
-    {
-        if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isUpdating)
+            Destroy(gameObject);
+            Debug.LogError("More than 1 Map. Destroying this. Name: " + name);
             return;
+        }
         
-        ClearMap();
-        GenerateMapJob();
+        player = FindFirstObjectByType<Player>();
+    }
+
+    private void Start()
+    {
+        // 64 since 8x8 and power of 2. might increase more
+        chunks = new Dictionary<Vector2, MapChunk>(64);
+    }
+
+    public void ClearFarChunks()
+    {
+        print("TODO: Clear chunks");
+    }
+
+    private void ClearAllChunks()
+    {
+        print("TODO: Clear all chunks");
+    }
+
+    public void Generate(Bounds bounds)
+    {
+        Vector2 bottomLeft = bounds.min;
+        Vector2 topRight = bounds.max;
+        print("Generating...");
+
+    }
+
+    // Clear and rebuild map
+    public void Regenerate(Bounds bounds)
+    {
+        print("Regenerate map");
+        ClearAllChunks();
+        Generate(bounds);
     }
 }

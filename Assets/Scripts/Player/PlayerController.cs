@@ -6,7 +6,8 @@ using UnityEngine;
 // Mainly camera controls since the player is the camera
 public class PlayerController : MonoBehaviour
 {
-    PlayerControlsManager controls;
+    private PlayerControlsManager controls;
+    private Camera cam;
 
     [SerializeField] float cameraPanSpeed = 1f;
     [SerializeField] float cameraZoomSpeed = 1f;
@@ -16,12 +17,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controls = PlayerControlsManager.instance;
+
+        Player player = GetComponent<Player>();
+        cam = player.cam;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Camera cam = Player.instance.cam;
         // TODO Camera Controls:
         // - Right mouse & middle mouse hold to move camera (DONE)
         // - Move mouse to edge of screen to move camera 
